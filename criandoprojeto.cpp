@@ -38,7 +38,7 @@ do {
 
 		case 1 :
 
-			printf("---------------------------    Cadastro         ------------------------------\n\n");
+			printf("---------------------------    Cadastro       ------------------------------\n\n");
 			cadastro(id,vacina,email,nome,sexo,endereco,altura);
 			break;
 		
