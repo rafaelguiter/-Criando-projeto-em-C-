@@ -15,7 +15,7 @@ void editar (int id[], int vacina[], char email[][100], char nome[][100], char s
 int main (){
 	
 	
-	int i=0, id[1000], vacina[1000], menu, fecharprograma, editar;
+	int i=0, id[1000], vacina[1000], menu, fecharprograma;
 	
 	char email[1000][100], nome[1000][100], sexo[1000][3], endereco[1000][300];
 
