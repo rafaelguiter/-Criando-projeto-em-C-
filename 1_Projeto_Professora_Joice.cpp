@@ -56,7 +56,7 @@ do {
 
 	}
 
-		printf("deseja sair do programa digite (1) para SIM e (2) para NAO :\n ");
+		printf("digite - (1) PARA FECHAR O PROGRAMA / (2) PARA VOLTAR AO MENU DE SELECOES: \n");
 		scanf("%d",&fecharprograma);
 		fflush(stdin);
 
@@ -67,6 +67,8 @@ do {
 		fflush(stdin);
 
 		}
+
+		getchar();
 		
 
 	
@@ -131,9 +133,14 @@ void cadastro(int id[], int vacina[], char email[][100], char nome[][100], char 
 
 	}
 
+	getchar();
+
+	
+	}
+
+
 	///////////////////////cadastro do nome
 
-	}
 
 		printf("Digite o seu nome completo: \n");
 		fgets(nome[i], sizeof(nome[i]), stdin);
@@ -181,15 +188,16 @@ void cadastro(int id[], int vacina[], char email[][100], char nome[][100], char 
 
 		printf("Digitos invalidos, verifique a opcao desejada.\nVoce ja foi vacinado digite (1) SIM  e (2) NAO: \n");
 		scanf("%d", &vacina[i]);
+		fflush(stdin);
 		printf("\n");
 		}
 
+		getchar();
 
-		i++;
 
      ///////// realizar novo cadastro ou fechar aba
 
-	printf("deseja realizar um novo cadastro digite (1) SIM  e (2) NAO: \n\n");
+	printf("Digite (1) REALIZAR UM NOVO CADASTRO / (2) VOLTAR AO MENU DE SELECOES : \n\n");
 	scanf("%d", &parar);
 	fflush(stdin);
 	printf("\n");
@@ -198,8 +206,13 @@ void cadastro(int id[], int vacina[], char email[][100], char nome[][100], char 
 
 		printf("Digitos invalidos, verifique a opcao desejada.\nDeseja realizar um novo cadastro digite (1) SIM  e (2) NAO: \n\n");
 		scanf("%d", &parar);
+		fflush(stdin);
 		printf("\n");
 	}
+
+	i++;
+
+	getchar();
 
 	if(pessoas == i && parar==1){
 
@@ -227,26 +240,44 @@ void cadastro(int id[], int vacina[], char email[][100], char nome[][100], char 
 
 void editar (int id[], int vacina[], char email[][100], char nome[][100], char sexo[][3], char endereco[][300], double altura[]) {
 
-	    int i, n_encontrado, escolher_busca, editar, escolha_editar, continuar;
-	    char encontrar_nome[100], encontrar_email[100], encontrar[100];
-
-	
-
-		printf("Por favor digite o Nome completo da pessoa que deseja Editar os dados: \n");
-		fgets(encontrar_nome, 100, stdin);
-		fflush(stdin);
-		printf("\n");
+	    int i, n_encontrado, nome_ou_email, editar, escolha_editar, continuar, v_e_encontrado, visualizar;
+	    char encontrar_nome[100], encontrar_email[100];
 
 
-	for (i=0; i<1000; i++ ){
+while (nome_ou_email!=1 && nome_ou_email!=2 ){
+
+	printf("Voce quer fazer a pesquisa pelo nome ou pelo o e-mail ? (1)NOME / (2)E-MAIL: \n\n");
+	scanf("%d",&nome_ou_email);
+	fflush(stdin);
+
+}	
+
+getchar();
 
 
+if (nome_ou_email==1){
 
-		if (strcmp(nome[i], encontrar_nome)==0){
+    printf("Digite o nome desejado:\n\n");
+fgets(encontrar_nome,sizeof(encontrar_nome), stdin);
+fflush(stdin);
+getchar();
 
-			n_encontrado = i;
 
-			printf("-----------------------   Cadastro Encontrado: ------------------------------\n\n");
+}else{
+
+    printf("Digite o E-MAIL desejado:\n\n");
+fgets(encontrar_email,sizeof(encontrar_email), stdin);
+fflush(stdin);
+getchar();
+
+}
+
+while (i<100){
+
+    if ((strcmp(nome[i], encontrar_nome)==0) || (strcmp(email[i], encontrar_email)==0)){
+
+
+        printf("-----------------------   Cadastro Encontrado: ------------------------------\n\n");
             printf("ID: %d\n\n", id[i]);
             printf("Nome: %s\n\n", nome[i]);
             printf("Email: %s\n\n", email[i]);
@@ -254,26 +285,46 @@ void editar (int id[], int vacina[], char email[][100], char nome[][100], char s
             printf("Endereco: %s\n\n", endereco[i]);
             printf("Altura: %.2f\n\n", altura[i]);
             printf("Vacina: %d\n\n", vacina[i]);
-		
 
+        n_encontrado=i;
+		v_e_encontrado = 1;
 
-
-			printf("Deseja editar algum dos dados ? (1) SIM  e  (2) NAO\n\n");
-			scanf("%d", &editar);
-			fflush(stdin);
-
-			while (editar!=1 && editar!=2){
-
-			printf("Deseja editar algum dos dados ? (1) SIM  e  (2) NAO\n\n");
-			scanf("%d", &editar);
-			fflush(stdin);
-			}
+        break;
 
         
 
-	        if (editar == 1) {
-               
-	            do{  
+    }else{
+        i++;
+		fflush(stdin);
+    }
+
+}
+
+
+
+if (v_e_encontrado!=1){
+
+    printf("-------------------------------------------------------------------\n\n");
+
+    printf("Cadastro nao encontrado\n\n");
+
+    printf("-------------------------------------------------------------------\n\n");
+
+}else{
+
+
+	while (editar!=1 && editar!=2){
+
+		printf("Deseja editar algum dos dados ? (1) SIM  / (2) NAO : \n\n");
+			scanf("%d", &editar);
+			fflush(stdin);
+
+	}    
+
+
+	if (editar==1){
+
+		      do{  
 			   
 			        printf("------------------------     Digite o numero do campo que deseja alterar:     -------------------------------\n");
                     printf("1 - Nome\n");
@@ -312,54 +363,81 @@ void editar (int id[], int vacina[], char email[][100], char nome[][100], char s
                         break;
 
                         case 5:
-                        printf("Digite a nova altura: ");
+                        printf("Digite a nova altura:\n ");
                         scanf("%lf", &altura[n_encontrado]);
                         fflush(stdin);
                         break;
 
                         case 6:
-                        printf("Digite a nova vacina (1= SIM)  e  (2 = NAO): \n");
+                        printf(" A pessoa foi vacinada (1)SIM / (2)NAO: \n");
                         scanf("%d", &vacina[n_encontrado]);
                         fflush(stdin);
                         break;
 
                         default:
-                        printf("Numero digitado incorreto.\n");
+                        printf("Numero digitado esta incorreto incorreto.\n\n");
+						printf("Para editar o cadastro, selecione a opcao (DESEJA EDITAR OUTRO DADO DESTA PESSOA) digite (1).\n\n");
+						printf("Leia as opcoes atentamente e selecione a opcao desejada.\n\n");
                         break;
                     
                     
                     }
+
+					getchar();
+
+							while (visualizar!=1 && visualizar!=2){
+
+		                       printf("Deseja visualizar os dados do cadastro? (1)SIM / (2)NAO : \n");
+                        		scanf("%d", &visualizar);
+                        		fflush(stdin);
+								getchar();
+		                    }
+
+							if (visualizar==1){
+
+								printf("-----------------------   Dados do paciente: ------------------------------\n\n");
+            					printf("ID: %d\n\n", id[i]);
+            					printf("Nome: %s\n\n", nome[i]);
+            					printf("Email: %s\n\n", email[i]);
+           					 	printf("Sexo: %s\n\n", sexo[i]);
+            					printf("Endereco: %s\n\n", endereco[i]);
+            					printf("Altura: %.2f\n\n", altura[i]);
+            					printf("Vacina: %d\n\n", vacina[i]);
+							
+								
+							}else{
+								printf("Certo - \n\n");
+							}
+							
                 
                
+  							while (continuar!=1 && continuar!=2){
 
-                        printf("Deseja editar outro dado desta pessoa? (1= SIM) e (2 = NAO): \n");
-                        scanf("%d", &continuar);
-                        fflush(stdin);
-                
-
-		                    while (continuar!=1 && continuar!=2){
-
-		                        printf("Deseja editar outro dado desta pessoa? (1= SIM) e (2 = NAO): \n");
-                                scanf("%d", &continuar);
-                                fflush(stdin);
+		                       printf("Deseja editar outro dado desta pessoa? (1)SIM / (2)NAO : \n");
+                        		scanf("%d", &continuar);
+                        		fflush(stdin);
 		                    }
-            
+							
+							getchar();
+                    
+
             
                 }while (continuar==1);
 
-            }else{
-                printf("numero nao corresponde");
-            }
 
-        }else{
-            printf("------------------------  Cadastro nao encontrado   --------------------------\n\n");
-        }
-    }
+	}else{
+
+		printf("------------------------  Aba de edicao de cadastro fechada   --------------------------\n\n");
+
+	}
+
+
+
+    
 }
 
-        
+}
 
-	
 			
 
 
